@@ -6,5 +6,7 @@ class Event < ApplicationRecord
     validates :time, comparison: { greater_than: DateTime.now, message: 'cannot be in the past.', name: 'Event'}
     validates :location, presence: true, length: { minimum: 5, maximum: 200 }
     validates :creator, presence: true
-    
+
+    has_many :attendances, foreign_key: 'attended_event_id'
+    has_many :attendees, through: :attendances
 end
