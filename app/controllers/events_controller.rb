@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
     before_action :authenticate_user!, only: [:new, :create]
     def index
-        @events = Event.all
+        @events = Event.all.order(:time)
     end
 
     def new
@@ -16,7 +16,10 @@ class EventsController < ApplicationController
             render 'new', status: :unprocessable_entity
         end
     end
-
+    
+    def show
+        @event = Event.find(params[:id])
+    end
     private
 
     def event_params

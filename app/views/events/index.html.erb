@@ -1,9 +1,9 @@
 <h2>Upcoming events</h2>
 
+<%= button_to "Create a new event", new_event_path, method: :get %>
+
 <% if @events.empty? %>
     No upcoming events.
 <% end %>
 
-<% @events.each do |event| %>
-    <%= render partial: 'event', locals: { event: event } %>
-<% end %>
+<%= render partial: @events %>

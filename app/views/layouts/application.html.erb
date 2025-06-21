@@ -25,6 +25,19 @@
   <body>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <% if user_signed_in? %>
+      <div>
+        <p>You are logged in as <%= render partial: 'users/user', locals: { user: current_user } %>.</p>
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+      </div>
+    <% else %>
+      <div>
+        <p>You are not logged in.</p>
+        <%= button_to "Log in", new_user_session_path %>
+      </div>
+      
+    <% end %>
     <%= yield %>
+    <p><%= link_to "Back to index", events_path %></p>
   </body>
 </html>
