@@ -7,7 +7,7 @@ class AttendancesController < ApplicationController
             return head(:unauthorized)
         end
         if @attendance.save
-            flash[:notice] = 'You have successfully signed up for this event!'
+            flash[:notice] = "You have successfully signed up for this event!"
             redirect_to event_path @attendance.attended_event
         else
             head(:unprocessable_entity)
@@ -17,17 +17,16 @@ class AttendancesController < ApplicationController
     def destroy
         @attendance = Attendance.find(params[:id])
         if @attendance.delete
-            flash[:notice] = 'You have successfully cancelled your attendance for this event!'
+            flash[:notice] = "You have successfully cancelled your attendance for this event!"
             redirect_to event_path @attendance.attended_event
         else
             head(:unprocessable_entity)
         end
-
     end
 
     private
 
     def attendance_params
-        params.expect(attendance: [:attendee_id, :attended_event_id])
+        params.expect(attendance: [ :attendee_id, :attended_event_id ])
     end
 end

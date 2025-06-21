@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-    before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+    before_action :authenticate_user!, only: [ :new, :create, :edit, :update ]
     def index
         @events = Event.all.order(:time)
     end
@@ -13,10 +13,10 @@ class EventsController < ApplicationController
         if @event.save
             redirect_to event_path
         else
-            render 'new', status: :unprocessable_entity
+            render "new", status: :unprocessable_entity
         end
     end
-    
+
     def show
         @event = Event.find(params[:id])
     end
@@ -30,12 +30,12 @@ class EventsController < ApplicationController
         if @event.update(event_params)
             redirect_to event_path
         else
-            render 'edit', status: :unprocessable_entity
+            render "edit", status: :unprocessable_entity
         end
     end
     private
 
     def event_params
-        params.expect(event: [:name, :description, :time, :location])
+        params.expect(event: [ :name, :description, :time, :location ])
     end
 end
