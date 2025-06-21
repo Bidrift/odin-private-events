@@ -21,6 +21,9 @@
                 <p>You did not attend this event.</p>
             <% end %>
         <% end %>
+        <% if event.creator_id == current_user.id %>
+            <%= link_to "Edit event", edit_event_path(event) %>
+        <% end %>
     <% end %>
     <% unless current_page?('/events/'+event.id.to_s) %>
         <p><%= link_to_unless_current "Event page", event_path(event.id) %></p>
