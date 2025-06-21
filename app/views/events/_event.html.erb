@@ -1,15 +1,25 @@
-<div style='border: 1px solid black; margin:20px 0; padding: 10px'>
+<div style='border: 1px solid black; margin:20px 0; padding: 10px; background-color: #eee;'>
     <h2><%= event.name %></h2>
     <p><%= event.description %></p>
     <p><strong>Location: </strong><%= event.location %></p>
     <p><strong>Date & Time: </strong><%= event.time.strftime("%I:%M %p, %A %dth of %B %Y") %></p>
     
     <% if user_signed_in? %>
-        <% @attendance = Attendance.find_or_initialize_by(attendee_id: current_user.id, attended_event_id: event.id) %>
-        <% if @attendance.new_record? %>
-            <p><%= button_to "Attend event", attendances_path, method: :post, params: { attendance: { attendee_id: @attendance.attendee_id, attended_event_id: @attendance.attended_event_id } } %></p>
+        <% if event.is_in_future? %>
+            <% @attendance = Attendance.find_or_initialize_by(attendee_id: current_user.id, attended_event_id: event.id) %>
+            <% if @attendance.new_record? %>
+                <p>You are not attending this event yet.</p>
+                <p><%= button_to "Attend event", attendances_path, method: :post, params: { attendance: { attendee_id: @attendance.attendee_id, attended_event_id: @attendance.attended_event_id } } %></p>
+            <% else %>
+                <p>You are attending this event.</p>
+                <p><%= button_to "Cancel attendance", attendance_path(@attendance), method: :delete, data: { method: :delete, confirm: "Are you sure?" } %></p>
+            <% end %>
         <% else %>
-            <p><%= button_to "Cancel attendance", attendance_path(@attendance), method: :delete, data: { method: :delete, confirm: "Are you sure?" } %></p>
+            <% if Attendance.find_by(attendee_id: current_user.id, attended_event_id: event.id) %>
+                <p>You have attended this event.</p>
+            <% else %>
+                <p>You did not attend this event.</p>
+            <% end %>
         <% end %>
     <% end %>
     <% unless current_page?('/events/'+event.id.to_s) %>
