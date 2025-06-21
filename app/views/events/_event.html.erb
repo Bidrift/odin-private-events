@@ -4,6 +4,14 @@
     <p><strong>Location: </strong><%= event.location %></p>
     <p><strong>Date & Time: </strong><%= event.time.strftime("%I:%M %p, %A %dth of %B %Y") %></p>
     
+    <% if user_signed_in? %>
+        <% @attendance = Attendance.find_or_initialize_by(attendee_id: current_user.id, attended_event_id: event.id) %>
+        <% if @attendance.new_record? %>
+            <p><%= button_to "Attend event", attendances_path, method: :post, params: { attendance: { attendee_id: @attendance.attendee_id, attended_event_id: @attendance.attended_event_id } } %></p>
+        <% else %>
+            <p><%= button_to "Cancel attendance", attendance_path(@attendance), method: :delete, data: { method: :delete, confirm: "Are you sure?" } %></p>
+        <% end %>
+    <% end %>
     <% unless current_page?('/events/'+event.id.to_s) %>
         <p><%= link_to_unless_current "Event page", event_path(event.id) %></p>
     <% end %>
