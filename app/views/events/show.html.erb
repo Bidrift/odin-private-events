@@ -2,3 +2,16 @@
 
 <%= render partial: 'event', locals: { event: @event } %>
 <p><strong>Created by: </strong><%= render partial: 'users/user', locals: { user: @event.creator } %></p>
+
+<div>
+    <h2>Attendees</h2>
+    <ul>
+        <% unless @event.attendees.any? %>
+            <li>There are no attendees to this event at the moment.</li>
+        <% end %>
+        <% @event.attendees.each do |attendee| %>
+            <li><%= render partial: "users/user", locals: { user: attendee } %></li>
+        <% end %>
+    </ul>
+    
+</div>
