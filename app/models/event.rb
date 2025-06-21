@@ -3,7 +3,7 @@ class Event < ApplicationRecord
 
     validates :name , presence: true, length: { minimum: 3, maximum: 100 }
     validates :description, presence: true, length: { minimum: 10, maximum: 500 }
-    validates :time, comparison: { greater_than: DateTime.now}
+    validates :time, comparison: { greater_than: DateTime.now, message: 'cannot be in the past.', name: 'Event'}
     validates :location, presence: true, length: { minimum: 5, maximum: 200 }
     validates :creator, presence: true
     

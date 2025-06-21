@@ -5,5 +5,5 @@
 <% end %>
 
 <% @events.each do |event| %>
-    <%= render 'event' %>
+    <%= render partial: 'event', locals: { event: event } %>
 <% end %>

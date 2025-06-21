@@ -1,0 +1,23 @@
+<%= form_with model: @event do |form| %>
+    <% @event.errors.each do |error| %>
+        <p><%= error.full_message %></p>
+    <% end %>
+    <div>
+        <%= form.label :name, "Event name" %>
+        <%= form.text_field :name, required: true, minlength: 3, maxlength: 100 %>
+    </div>
+    <div>
+        <%= form.label :description, "Event details" %>
+        <%= form.text_area :description, required: true, minlength: 10, maxlength: 500 %>
+    </div>
+    <div>
+        <%= form.label :time, "Event date and time" %>
+        <%= form.datetime_field :time, required: true %>
+    </div>
+    <div>
+        <%= form.label :location, "Event location" %>
+        <%= form.text_field :location, required: true, minlength: 5, maxlength: 200 %>
+    </div>
+
+    <%= form.submit %>
+<% end %>

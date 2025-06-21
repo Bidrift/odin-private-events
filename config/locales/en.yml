@@ -29,3 +29,10 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      event:
+        name: "Event name"
+        description: "Event description"
+        time: "Event time"
+        location: "Event location"
