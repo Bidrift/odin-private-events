@@ -1,4 +1,4 @@
-<h1>This is the profile for <%= @user.email %></h1>
+<h1>This is the profile for <%= render partial: 'user', locals: { user: @user } %></h1>
 
 <h2>Upcoming user events</h2>
 
