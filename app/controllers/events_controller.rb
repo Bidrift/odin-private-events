@@ -5,10 +5,21 @@ class EventsController < ApplicationController
     end
 
     def new
-
+        @event = Event.new
     end
 
     def create
+        @event = current_user.events.build(event_params)
+        if @event.save
+            redirect_to events_path
+        else
+            render 'new', status: :unprocessable_entity
+        end
+    end
 
+    private
+
+    def event_params
+        params.expect(event: [:name, :description, :time, :location])
     end
 end
