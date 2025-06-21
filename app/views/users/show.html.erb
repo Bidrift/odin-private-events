@@ -1,18 +1,59 @@
 <h1>This is the profile for <%= render partial: 'user', locals: { user: @user } %></h1>
 
-<h2>Upcoming user events</h2>
 
 
-<% if current_user == @user %>
-    <%= button_to "Create a new event", new_event_path, method: :get %>
-<% end %>
+<div style="border: 1px solid black; padding:10px; margin: 20px 0px;">
+    <h2>Upcoming created events</h2>
+    <% if current_user == @user %>
+        <%= button_to "Create a new event", new_event_path, method: :get %>
+    <% end %>
 
+    <% if @user.events.in_future.empty? %>
+        No upcoming events created by this user.
+    <% end %>
 
-<% if @user.events.empty? %>
-    No upcoming events created by this user.
-<% end %>
+    <% @user.events.in_future.order(:time).each do |event| %>
+        <%= render partial: 'events/event', locals: { event: event }%>
+        <%= link_to "Event page", event_path(event.id) %>
+    <% end %>
+</div>
 
-<% @user.events.order(:time).each do |event| %>
-    <%= render partial: 'events/event', locals: { event: event }%>
-    <%= link_to "Event page", event_path(event.id) %>
-<% end %>
+<div style="border: 1px solid black; padding:10px; margin: 20px 0px;">
+    <h2>Events attended by user</h2>
+    <% if @user.attended_events.empty? %>
+        This user is not attending any events.
+    <% end %>
+
+    <% @user.attended_events.in_future.order(:time).each do |event| %>
+        <%= render partial: 'events/event', locals: { event: event }%>
+        <%= link_to "Event page", event_path(event.id) %>
+    <% end %>
+</div>
+
+<div style="border: 1px solid black; padding:10px; margin: 20px 0px;">
+    <h2>Past created events</h2>
+    <% if current_user == @user %>
+        <%= button_to "Create a new event", new_event_path, method: :get %>
+    <% end %>
+
+    <% if @user.events.in_past.empty? %>
+        No past events have been created by this user.
+    <% end %>
+
+    <% @user.events.in_past.order(time: :desc).each do |event| %>
+        <%= render partial: 'events/event', locals: { event: event }%>
+        <%= link_to "Event page", event_path(event.id) %>
+    <% end %>
+</div>
+
+<div style="border: 1px solid black; padding:10px; margin: 20px 0px;">
+    <h2>Events attended by user in the past</h2>
+    <% if @user.attended_events.empty? %>
+        This user is did not attend any events.
+    <% end %>
+
+    <% @user.attended_events.in_past.order(time: :desc).each do |event| %>
+        <%= render partial: 'events/event', locals: { event: event }%>
+        <%= link_to "Event page", event_path(event.id) %>
+    <% end %>
+</div>
