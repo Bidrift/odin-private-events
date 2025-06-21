@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :events, only: [:new, :create, :index, :show]
+  resources :events, only: [:new, :create, :index, :show, :edit, :update]
   resources :users, only: [:show]
   resources :attendances, only: [:create, :destroy]
 
