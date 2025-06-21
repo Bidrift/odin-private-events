@@ -1,0 +1,11 @@
+<h1>This is the profile for <%= @user.email %></h1>
+
+<h2>Upcoming user events</h2>
+
+<% if @user.events.empty? %>
+    No upcoming events created by this user.
+<% end %>
+
+<% @user.events.each do |event| %>
+    <%= render 'events/event' %>
+<% end %>

@@ -5,8 +5,5 @@
 <% end %>
 
 <% @events.each do |event| %>
-    <h2><%= event.name %></h2>
-    <p><%= event.description %></p>
-    <p><strong>Location: </strong><%= event.location %></p>
-    <p><strong>Date & Time: </strong><%= event.time.strftime("%I:%M %p, %A %dth of %B %Y") %></p>
+    <%= render 'event' %>
 <% end %>
