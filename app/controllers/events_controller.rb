@@ -24,16 +24,16 @@ class EventsController < ApplicationController
     def edit
         @event = Event.find(params[:id])
         if @event.creator_id != current_user.id
-            flash['alert'] = "You are not authorized to edit this event"
-            return render 'show', status: :unauthorized
+            flash["alert"] = "You are not authorized to edit this event"
+            redirect_to event_path
         end
     end
 
     def update
         @event = Event.find(params[:id])
         if @event.creator_id != current_user.id
-            flash['alert'] = "You are not authorized to edit this event"
-            return render 'show', status: :unauthorized
+            flash["alert"] = "You are not authorized to edit this event"
+            return redirect_to event_path
         end
         if @event.update(event_params)
             redirect_to event_path
