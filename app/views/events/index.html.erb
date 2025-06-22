@@ -2,8 +2,16 @@
 
 <%= button_to "Create a new event", new_event_path, method: :get %>
 
-<% if @events.empty? %>
+<% if @events.in_future.empty? %>
     No upcoming events.
 <% end %>
 
-<%= render partial: @events %>
+<%= render partial: @events.in_future.order(:time) %>
+
+<h2>Past events</h2>
+
+<% if @events.in_past.empty? %>
+    No events in the past.
+<% end %>
+
+<%= render partial: @events.in_past.order(time: :desc) %>
